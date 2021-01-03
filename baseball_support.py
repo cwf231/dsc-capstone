@@ -10,6 +10,7 @@ import pickle
 import bz2
 import warnings
 
+from scipy import sparse
 from sklearn.metrics import (classification_report, 
                              balanced_accuracy_score, 
                              log_loss)
@@ -394,24 +395,30 @@ def load_modeling_tools(path='./modeling/'):
 		X_preprocessor (fit ColumnTransformer)
 		y_preprocessor (fit LabelEncoder)
 		X_train_processed (sparse matrix)
-		y_train_processed (numpy array)
+		y_train_processed (sparse matrix)
 		X_test_processed (sparse matrix)
-		y_test_processed (numpy array)
+		y_test_processed (sparse matrix)
 	"""
 	modeling_tools = {}
 	print('Loading...')
-	for fname in os.listdir(path):
-		with bz2.open(f'{path}{fname}', 'rb') as infile:
+	for f_dir in [x for x in os.listdir(path) if 'ipynb' not in x]:
+		for fname in os.listdir(path+f_dir):
 			name = fname.split('.')[0]
-			f = pickle.load(infile)
-			modeling_tools[name] = f
+			if not name:
+				continue
+			if fname.endswith('.npz'):
+				modeling_tools[name] = sparse.load_npz(f'{path}{f_dir}/{fname}')
+			elif fname.endswith('.pkl'):
+				with open(f'{path}{f_dir}/{fname}', 'rb') as infile:
+					f = pickle.load(infile)
+					modeling_tools[name] = f
 			print('Loaded:', name)
 	print('Complete!')
 	return (
     	modeling_tools.get('X_preprocessor'),
 		modeling_tools.get('y_preprocessor'),
 		modeling_tools.get('X_train_processed'),
-		modeling_tools.get('y_train_processed'),
+		np.ravel(modeling_tools.get('y_train_processed').todense()),
 		modeling_tools.get('X_test_processed'),
-		modeling_tools.get('y_test_processed'),
+		np.ravel(modeling_tools.get('y_test_processed').todense()),
 	)

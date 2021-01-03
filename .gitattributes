@@ -1,1 +1,1 @@
-modeling/X_train_processed.bz2 filter=lfs diff=lfs merge=lfs -text
+modeling/data/X_train_processed.npz filter=lfs diff=lfs merge=lfs -text
