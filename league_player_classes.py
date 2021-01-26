@@ -70,8 +70,10 @@ class League:
 	>>> mlb.get_player('cwf231')
 	Hitter(cwf231)
 	"""
+
 	def __init__(self):
 		"""Creates an empty League."""
+
 		self.hitters = {}
 		self.pitchers = {}
 
@@ -84,6 +86,7 @@ class League:
 
 	def add_player(self, player):
 		"""Adds a Player to it's storage."""
+
 		if isinstance(player, Hitter):
 			if player.player_id in self.hitters:
 				return
@@ -106,6 +109,7 @@ class League:
 		will be created and added to the league.
 			`create_new` can only be run if `hitter_pitcher` is passed.
 		"""
+
 		if hitter_pitcher:
 			if hitter_pitcher not in ('hitter', 'pitcher'):
 				raise Exception("hitter_pitcher must be ('hitter' | 'pitcher')")
@@ -121,8 +125,8 @@ class League:
 					player = Pitcher(player_id)
 				self.add_player(player)
 		else:
-			player_h =  self.hitters.get(player_id, None)
-			player_p =  self.pitchers.get(player_id, None)
+			player_h = self.hitters.get(player_id, None)
+			player_p = self.pitchers.get(player_id, None)
 			if player_h and player_p:
 				return player_h, player_p
 			elif player_h:
@@ -147,6 +151,7 @@ class League:
 			['h_ab_coming_in', 'h_k%_coming_in', 'h_ops_coming_in',
 			 'p_ip_coming_in', 'p_whip_coming_in', 'p_k_bb_coming_in']
 		"""
+
 		ab_lst = []
 		k_perc_lst = []
 		ops_lst = []
@@ -219,6 +224,7 @@ class Player:
 	 {'bb': 1, 'k': 0, 'h': 2, 'sac': 0, 'tb': 5, 'ab': 2},
 	 {'bb': 1, 'k': 1, 'h': 2, 'sac': 0, 'tb': 5, 'ab': 3}]
 	"""
+
 	def __init__(self, player_id):
 		"""
 		Creates the Player. 
@@ -228,6 +234,7 @@ class Player:
 			career_stats
 			rolling_stats
 		"""
+
 		self.player_id = player_id
 		self.career_stats = {}
 		self.rolling_stats = []
@@ -245,7 +252,11 @@ Number of events:\n\t{len(self.rolling_stats)}"""
 		Adds the snapshot of the Player's current career stats 
 		to their rolling stats.
 		"""
+
 		self.rolling_stats.append(self.career_stats.copy())
+
+	def __delete_rolling_stats(self):
+		self.rolling_stats = []
 
 
 class Hitter(Player):
@@ -271,6 +282,7 @@ class Hitter(Player):
 		If a `record` (dict) is passed, it will be used.
 		Otherwise, the current `career_stats` will be used.
 		"""
+
 		if record is None:
 			record = self.career_stats
 		return record.get('ab', 0)
@@ -282,6 +294,7 @@ class Hitter(Player):
 		If a `record` (dict) is passed, it will be used.
 		Otherwise, the current `career_stats` will be used.
 		"""
+
 		if record is None:
 			record = self.career_stats
 		ab = self.__at_bats(record)
@@ -296,6 +309,7 @@ class Hitter(Player):
 		If a `record` (dict) is passed, it will be used.
 		Otherwise, the current `career_stats` will be used.
 		"""
+
 		if record is None:
 			record = self.career_stats
 		numerator = record.get('h', 0) + \
@@ -314,6 +328,7 @@ class Hitter(Player):
 		If a `record` (dict) is passed, it will be used.
 		Otherwise, the current `career_stats` will be used.
 		"""
+
 		if record is None:
 			record = self.career_stats
 		ab = self.__at_bats(record)
@@ -328,6 +343,7 @@ class Hitter(Player):
 		If a `record` (dict) is passed, it will be used.
 		Otherwise, the current `career_stats` will be used.
 		"""
+
 		if record is None:
 			record = self.career_stats
 		obp = self.__get_obp(record)
@@ -346,6 +362,7 @@ class Hitter(Player):
 		Final columns are [`bb`, `k,` `h,` `sac`, `tb`, `ab`, `k%`, `ops`]
 		and an index of [`pa`] (plate appearances).
 		"""
+
 		df_rolling = pd.DataFrame(self.rolling_stats)
 		df_engineered = pd.DataFrame([self.stats_heading_in(record) 
 									  for record in self.rolling_stats],
@@ -362,6 +379,7 @@ class Hitter(Player):
 		If a `record` (dict) is passed, it will be used.
 		Otherwise, the current `career_stats` will be used.
 		"""
+
 		return (self.__at_bats(record), 
 				self.__get_strikeout_rate(record), 
 				self.__get_ops(record))
@@ -371,6 +389,7 @@ class Hitter(Player):
 		Updates the Player's career_stats & 
 		appends the Player's rolling_stats.
 		"""
+
 		# Update career_stats.
 		at_bat = False # Some events count as at-bats and others do not.
 		if outcome == 'BB':
@@ -411,10 +430,12 @@ class Pitcher(Player):
 
 	def __get_ip(self):
 		"""Return (outs / 3) from hitter_dct."""
+
 		return self.career_stats.get('o', 0) / 3
 
 	def __get_whip(self):
 		"""Return (bb + h) / ip from hitter_dct."""
+
 		ip = self.__get_ip()
 		if ip == 0:
 			return -1.0
@@ -423,6 +444,7 @@ class Pitcher(Player):
 
 	def __get_k_bb_ratio(self):
 		"""Return k / bb from hitter_dct."""
+
 		bb = self.career_stats.get('bb', 0)
 		if bb == 0:
 			return -1.0
@@ -433,6 +455,7 @@ class Pitcher(Player):
 		Returns career stats as a snapshot to apply to the dataset.
 		(`ip`, `whip`, `k_bb_ratio`)
 		"""
+
 		return (self.__get_ip(), 
 				self.__get_whip(), 
 				self.__get_k_bb_ratio())
@@ -442,6 +465,7 @@ class Pitcher(Player):
 		Appends the Player's rolling_stats and 
 		updates the Player's career_stats.
 		"""
+		
 		# Update career_stats.
 		is_out = False
 		if outcome == 'BB':
