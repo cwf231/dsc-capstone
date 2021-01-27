@@ -82,6 +82,7 @@ def create_data_directory(start_year):
 		available choices: 
 			[1910, 1920, 1930, 1940, 1950, 1960, 1970, 1980, 1990, 2000]
 	"""
+    
 	file_lst = [f'{str(y)}seve' for y in range(start_year, 2020, 10)]
 	url_lst = [os.path.join('https://www.retrosheet.org/events/', f'{f}.zip')
 			   for f in file_lst]
