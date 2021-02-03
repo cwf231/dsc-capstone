@@ -998,7 +998,7 @@ def plot_stat_impact_on_outcome(df,
 										'mid-high',
 										'high']):
 	"""
-	Show a stacked barplot of a binned stat (via pd.qcut)
+	Show and return a stacked barplot of a binned stat (via pd.qcut)
 	and its relationship with the target.
 
 	Parameters:
@@ -1090,6 +1090,7 @@ def plot_stat_impact_on_outcome(df,
 			  ncol=5)
 	fig.tight_layout()
 	plt.show()
+	return fig
 
 def print_metrics(X, 
 				  y, 
