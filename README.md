@@ -16,7 +16,9 @@ Before a game is played, the manager (along with the coaching staff and front of
 ... and so on down the batting order.
 
 **Does the Batting Order Matter?**
+
 <img src='./images/lineup_samples_ev.png' width=500>
+
 When shuffling a lineup, there are 362,880 possible permutations. After taking 100 random permutations of a lineup, you can see the vast difference that the batting order makes on the expected runs scored.
 
 **Can we improve on tradition?**
@@ -42,6 +44,7 @@ The app is deployed on *Heroku* and can be found <a href='https://capstone-baseb
 > *https://capstone-baseball-simulator.herokuapp.com/*
 
 <img src='./images/app.png' width=400>
+
 
 # Project Outline
 
@@ -249,6 +252,7 @@ Because there is randomness in sports, there isn't a way to predict if the next 
 
 ### Compare models: cross-entropy loss, performance time.
 While the Neural Network without class weights performed the best overall (cross-entropy loss), there was a clear difference in the amount of time it took to make its predictions and the size of the model itself.
+
 <img src='./images/model_performance.png'>
 
 ### Validate against real season-data.
@@ -294,6 +298,7 @@ Clearly, the Neural Network returned a much closer prediction to reality (the SG
 
 ## Conclusions
 We can conclusively say that the batting order makes a difference in expected runs scored. With 100 randomly selected permutations of a lineup, after running simulations totaling 300-innings the differences were dramatic.
+
 <img src='./images/lineup_samples_ev.png'>
 
 ### SGD chosen for lightweight and fast deployment.
