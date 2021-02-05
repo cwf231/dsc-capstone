@@ -15,8 +15,8 @@ from IPython.display import clear_output
 from scipy import sparse
 from scipy.stats import wilcoxon
 from sklearn.metrics import (classification_report, 
-                             balanced_accuracy_score, 
-                             log_loss)
+							 balanced_accuracy_score, 
+							 log_loss)
 import tensorflow as tf
 
 
@@ -262,11 +262,11 @@ class Simulator:
 			(h_ab, 
 			 h_k, 
 			 h_ops) = self.league.get_player(
-			 	hitter_id, 'hitter', create_new=True).stats_heading_in()
+				hitter_id, 'hitter', create_new=True).stats_heading_in()
 			(p_ip,
 			 p_whip,
 			 p_k_bb) = self.league.get_player(
-			 	pitcher_id, 'pitcher', create_new=True).stats_heading_in()
+				pitcher_id, 'pitcher', create_new=True).stats_heading_in()
 
 		if previous_outcomes:
 			if len(previous_outcomes) == 1:
@@ -423,7 +423,7 @@ class Simulator:
 				atbat_idx += 1
 				if atbat_idx >= len(lineup):
 					atbat_idx = 0
-			    
+				
 				# append results
 				if s.get('outs') >= 3:
 					results.append(s.get('runs'))
@@ -454,45 +454,45 @@ class Simulator:
 		Parameters:
 		-----------
 		lineup: array or list of player_ids (strings)
-		    Ordered list of hitter_ids that represent the batting lineup.
+			Ordered list of hitter_ids that represent the batting lineup.
 		pitcher_id: string
-		    pitcher_id which represents the opposing pitcher.
+			pitcher_id which represents the opposing pitcher.
 		inning_num: int (default: 1)
-		    Inning number to start the simulation on.
+			Inning number to start the simulation on.
 		inning_half: int (one of [0, 1] :: default: 0)
-		    0: Top of the inning. 
-		    1: Bottom of the inning.
+			0: Top of the inning. 
+			1: Bottom of the inning.
 		use_career_stats: bool (default: True)
-		    If True, the player_finder will use career stats for the player.
-		    Otherwise, these fields will be left as `missing`.
+			If True, the player_finder will use career stats for the player.
+			Otherwise, these fields will be left as `missing`.
 		dblhdr_number: int (one of [0, 1, 2] :: default: 0)
-		    If `0`, the game is the only game scheduled on the day.
-		    If `1`, the game is the first of two scheduled for the same day.
-		    If `2`, the game is the second of two scheduled for the same day.
+			If `0`, the game is the only game scheduled on the day.
+			If `1`, the game is the first of two scheduled for the same day.
+			If `2`, the game is the second of two scheduled for the same day.
 		day_night: string (one of ['day', 'night'] :: default: 'night')
-		    Time of day the game is played.
+			Time of day the game is played.
 		temp: int (default: -1)
-		    Degrees Fahrenheit at the start of the game.
-		    `-1` represents an unknown value.
+			Degrees Fahrenheit at the start of the game.
+			`-1` represents an unknown value.
 		wind: int (default: -1)
-		    Wind speed (mph) at the start of the game.
-		    `-1` represents an unknown value.
+			Wind speed (mph) at the start of the game.
+			`-1` represents an unknown value.
 		field_cond: string (default: 'unknown')
-		    Recognized conditions are: 
-		        [`unknown`, `dry`, `wet`, `damp`, `soaked`]
+			Recognized conditions are: 
+				[`unknown`, `dry`, `wet`, `damp`, `soaked`]
 		precip: string (default: 'unknown')
-		    Recognized percipitation values are: 
-		        [`unknown`, `none`, `rain`, `drizzle`, `showers`, `snow`]
+			Recognized percipitation values are: 
+				[`unknown`, `none`, `rain`, `drizzle`, `showers`, `snow`]
 		attendance: int (default: -1)
-		    Number of fans in attendance at the game.
-		    `-1` represents an unknown value.
+			Number of fans in attendance at the game.
+			`-1` represents an unknown value.
 		n: int (default: 10_000)
-		    Number of simulations to run.
+			Number of simulations to run.
 		num_innings: int (default: 1)
-		    Number of innings to simulate per simulation.
+			Number of innings to simulate per simulation.
 		verbose: int (one of [`0`, `1`, `2`, `3`] :: default: 1)
-		    Level of verbosity while the simulator runs.
-		    * If `4`, every play of every simulation will be printed.
+			Level of verbosity while the simulator runs.
+			* If `4`, every play of every simulation will be printed.
 		"""
 
 		RUNS_SCORED = []
@@ -578,11 +578,11 @@ class Simulator:
 		`expected_runs_scored`.
 
 		(e.g.:
-		    # try1: [(1),2,3,4,5,6,7,8,9]
-		    # try2: [2,(1),3,4,5,6,7,8,9]
-		    # try3: [3,2,(1),4,5,6,7,8,9]
-		    # try4: [4,2,3,(1),5,6,7,8,9]
-		    # try5: . . .
+			# try1: [(1),2,3,4,5,6,7,8,9]
+			# try2: [2,(1),3,4,5,6,7,8,9]
+			# try3: [3,2,(1),4,5,6,7,8,9]
+			# try4: [4,2,3,(1),5,6,7,8,9]
+			# try5: . . .
 		)
 
 		Once the highest `expected_runs_scored` is found from the first slot, 
@@ -722,7 +722,7 @@ class PlayerFinder:
 	--------------
 	>>> playerfinder = PlayerFinder()
 	>>> playerfinder.show_player('Griffey')
-	             last first play_debut mgr_debut coach_debut ump_debut
+				 last first play_debut mgr_debut coach_debut ump_debut
 	id                                                                
 	grifk001  Griffey   Ken 1973-08-25       NaN  04/06/1993       NaN
 	grifk002  Griffey   Ken 1989-04-03       NaN         NaN       NaN
@@ -746,7 +746,7 @@ class PlayerFinder:
 		return f'''
 	**********PLAYER FINDER**********
 	Number of player records loaded: {len(self.player_df)}'''
-	    
+		
 	def __load_data(self, player_csv_path):
 		"""Load and clean player data."""
 
@@ -844,40 +844,40 @@ class PlayerFinder:
 
 
 def underline(string, character='-'):
-    """
-    Return a string of a given character with the length of a given string.
-    """
+	"""
+	Return a string of a given character with the length of a given string.
+	"""
 
-    return character * len(string)
-    
-    
+	return character * len(string)
+	
+	
 def headerize(string, character='*', max_len=80):
-    """
-    Return a given string with a box (of given character) around it.
-    """
+	"""
+	Return a given string with a box (of given character) around it.
+	"""
 
-    if max_len:
-        # Create uniform size boxes for headers with centered text.
-        if len(string) > max_len-2:
-            string = string[:max_len-5] + '...'
-            
-        total_space = max_len - 2 - len(string)
-        left = total_space // 2
-        if total_space % 2 == 0:
-            right = left
-        else:
-            right = left + 1
-        
-        top = character * max_len
-        mid = f'{character}{" " * left}{string}{" " * right}{character}'
-        bot = top
-    else:
-        # Create modular header boxes depending on the length of the string.
-        top = character * (len(f'{string}')+42)
-        mid = f'{character}{" " * 20}{string}{" " * 20}{character}'
-        bot = top
-        
-    return f'{top}\n{mid}\n{bot}'
+	if max_len:
+		# Create uniform size boxes for headers with centered text.
+		if len(string) > max_len-2:
+			string = string[:max_len-5] + '...'
+			
+		total_space = max_len - 2 - len(string)
+		left = total_space // 2
+		if total_space % 2 == 0:
+			right = left
+		else:
+			right = left + 1
+		
+		top = character * max_len
+		mid = f'{character}{" " * left}{string}{" " * right}{character}'
+		bot = top
+	else:
+		# Create modular header boxes depending on the length of the string.
+		top = character * (len(f'{string}')+42)
+		mid = f'{character}{" " * 20}{string}{" " * 20}{character}'
+		bot = top
+		
+	return f'{top}\n{mid}\n{bot}'
 
 
 def check_for_data(path='./data'):
@@ -887,17 +887,16 @@ def check_for_data(path='./data'):
 	"""
 
 	if 'data' not in os.listdir():
-		print('''`./data` directory not found. 
-Please follow instructions to run `scrape_data_to_csv.py`''')
-		return
+		print('`./data` directory not found.')
+		return False
 
 	files = ['games.csv', 'events.csv', 'teams.csv']
 	for f in files:
 		if f not in os.listdir('./data'):
 			print(f'`{f}` not found.')
-			return
+			return False
 	print(headerize('SUCCESS - Data Found'))
-	return
+	return True
 
 
 def load_data():
@@ -916,8 +915,8 @@ def engineer_outcome(series):
 	"""
 	Decipher events made by the batter at the plate.
 	Information on this column can be found here: 
-	    https://www.retrosheet.org/eventfile.htm
-	    
+		https://www.retrosheet.org/eventfile.htm
+		
 	Returns a dataframe of two columns: [`outcome`, `total_bases`]
 	"""
 
@@ -983,20 +982,22 @@ def engineer_outcome(series):
 			data.append({'outcome': np.nan, 'total_bases': np.nan})
 		elif is_no_result(outcome):
 			data.append({'outcome': np.nan, 'total_bases': np.nan})
-            
+			
 	return pd.DataFrame(data)
 
 
-def plot_stat_impact_on_outcome(df, 
-								stat_column, 
-								legend_label=None,
-								target='outcome', 
-								bins=5, 
-								labels=['low',
-										'mid-low', 
-										'mid', 
-										'mid-high',
-										'high']):
+def plot_stat_impact_on_outcome(
+	df, 
+	stat_column, 
+	legend_label=None,
+	align='bottom',
+	target='outcome', 
+	bins=5, 
+	labels=['low',
+			'mid-low', 
+			'mid', 
+			'mid-high',
+			'high']):
 	"""
 	Show and return a stacked barplot of a binned stat (via pd.qcut)
 	and its relationship with the target.
@@ -1010,6 +1011,9 @@ def plot_stat_impact_on_outcome(df,
 		Pass a suffix for the legend. This should be a shorter abbreviation
 		of the `stat_column`.
 		If None is passed, there will be no suffix to the labels.
+	align: string (default: 'bottom')
+		One of ('bottom', 'center'). Aligns the bars either at the center point 
+		of the "mid"-bin or aligns all bars to the left wall.
 	target: string (default: 'outcome')
 		Categorical column to plot.
 	bins: int (default: 5)
@@ -1028,6 +1032,7 @@ def plot_stat_impact_on_outcome(df,
 		.rename('percent')
 		.reset_index()
 	)
+	bottom_align = align == 'bottom'
 
 	# Get sorted outcomes.
 	if len(labels) % 2 == 0:
@@ -1045,26 +1050,29 @@ def plot_stat_impact_on_outcome(df,
 		)
 
 	# Housekeeping for plot.
-	y_tick_markers = list(range(len(possible_outcomes), -1, -1))
+	x_tick_markers = list(range(len(possible_outcomes)))
 	gradient_colors = ['firebrick',
 					   'lightcoral',
-					   'gainsboro',
+					   'thistle',
 					   'cornflowerblue',
 					   'darkblue']
 
 	# Plot
 	fig, ax = plt.subplots()
-	for outcome, y_tick in zip(possible_outcomes, y_tick_markers):
+	for outcome, x_tick in zip(possible_outcomes, x_tick_markers):
 		s = data[data[target] == outcome].copy()
 		# Find leftmost placement of bars.
-		leftmost = (s[s[stat_column] == 'mid']['percent'].values[0] / 2) + \
-					s[s[stat_column] == 'mid-low']['percent'].values[0] + \
-					s[s[stat_column] == 'low']['percent'].values[0]
-		leftmost = -leftmost
+		if bottom_align:
+			leftmost = 0
+		else:
+			leftmost = (s[s[stat_column] == 'mid']['percent'].values[0] / 2) + \
+						s[s[stat_column] == 'mid-low']['percent'].values[0] + \
+						s[s[stat_column] == 'low']['percent'].values[0]
+			leftmost = -leftmost
 
 		# Iterate and plot.
 		for group, color in zip(labels, gradient_colors):
-			if y_tick == y_tick_markers[0]:
+			if x_tick == x_tick_markers[0]:
 				if legend_label:
 					label = f'{group.title()} {legend_label}'
 				else:
@@ -1072,19 +1080,24 @@ def plot_stat_impact_on_outcome(df,
 			else:
 				label = None
 			v = s[s[stat_column] == group]['percent'].values[0]
-			ax.barh(y_tick, 
+			ax.bar(x_tick, 
 					v, 
-					left=leftmost,
+					bottom=leftmost,
 					color=color,
 					label=label)
 			leftmost += v
-	ax.set_yticks(y_tick_markers)
-	ax.set_yticklabels(possible_outcomes)
-	ax.set(title=f'{stat_column} :: Impact on {target.title()}',
-		   xlabel='Percent of Outcomes',
-		   ylabel='Outcome')
+	ax.set_xticks(x_tick_markers)
+	ax.set_xticklabels(possible_outcomes)
+	if bottom_align:
+		ax.set_ylim(0, 1)
+		ax.set_yticklabels([f'{round(x*100)}%' for x in ax.get_yticks()])
+	else:
+		ax.set_yticks([])
+	ax.set(title=f'{legend_label or stat_column} :: Impact on {target.title()}',
+		   ylabel='Percent of Outcomes' if bottom_align else '',
+		   xlabel='Outcome')
 	ax.legend(loc='upper center', 
-			  bbox_to_anchor=(0.5, -0.15),
+			  bbox_to_anchor=(0.5, -0.15) if bottom_align else (0.5, 0),
 			  fancybox=True, 
 			  shadow=True, 
 			  ncol=5)
@@ -1171,7 +1184,7 @@ def load_modeling_tools(path='./modeling/'):
 			print('Loaded:', name)
 	print('Complete!')
 	return (
-    	modeling_tools.get('X_preprocessor'),
+		modeling_tools.get('X_preprocessor'),
 		modeling_tools.get('y_preprocessor'),
 		modeling_tools.get('WEIGHTS_DCT'),
 		modeling_tools.get('X_train_processed'),
