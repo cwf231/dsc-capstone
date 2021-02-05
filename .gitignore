@@ -1,6 +1,7 @@
 .DS_store
 .ipynb_checkpoints
 /data/
+/models/
+/modeling/data/
 README.ipynb
 test.ipynb
-/models/
