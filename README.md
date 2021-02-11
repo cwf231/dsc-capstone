@@ -1,4 +1,5 @@
-# Are Baseball Batting Orders Optimal?
+# Are Baseball Lineups Optimal?
+***Predicting outcomes of at-bats to optimize batting orders.***
 
 ## Business Understanding
 **Sports Analytics**
@@ -306,8 +307,3 @@ Due to the fact that I wanted to deploy the model to be a Heroku app, I needed t
 
 ### Heroku app deployed with ability to simulate games.
 https://capstone-baseball-simulator.herokuapp.com/
-
-
-```python
-
-```
