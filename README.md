@@ -297,7 +297,42 @@ Actual:    Average Runs per Game: 3.753086419753086
 
 Clearly, the Neural Network returned a much closer prediction to reality (the SGD was ballooning predicted runs-scored).
 
-## Conclusions
+# Conclusions
+
+The Simulations showed conclusively that changing a batting order will change the expected results. There was a huge shift in performance between 100 randomly-shuffled lineups. Over the course of 162 games (one regular-season), the disadvantage of using sub-optimal lineups would add up to be a severe detriment.
+
+***
+
+The models showed that scoring well for accuracy is not possible, since in sports there is a definite aspect of randomness (i.e.: on a given day, any player can get the better of any other player). However, in basing our judgments on cross-entropy loss, we find the model which was able to return the most accurate prediction-probabilities was a Neural Network without class weights.
+
+However, since deployment on *heroku* was a factor, the size and speed of the model influenced the decision. While the Neural Net was the most accurate (by a slim margin), the SGD Logistic Regression Classifier was much more light-weight and scored nearly the same cross-entropy loss on the test set. Therefore, this is the best model for this particular situation. 
+
+Class weights, for this specific problem, were more of a detriment than an asset for the model - since the model was much more prone to overfitting on the less-frequent classes. This doesn't make sense, as there isn't any reasonable way to be able to predict if there will be a catcher's interference on the next play, or that the next play will most likely be a triple. 
+
+However, those outcomes are *possible* and incorporated into the Simulator app.
+
+***
+
+## Recommendations:
+
+***1. Batting order matters!***
+- There is a huge difference in performance from one lineup-configuration to another.
+- When setting your lineup, remember that there are more factors than just *who do I feel should hit where?* Opposing pitchers' tendencies, game conditions, and lineup interactions should be at the forefront of your decision-making process.
+- **Lineups should change regularly** to leverage different advantages against different pitchers.
+  - The web app can be used to optimize your lineup of players to return the order with the highest 'expected runs scored'.
+
+***2. The larger the difference between 'total bases' and strikeouts, the longer the hitter's career will be.***
+- When evaluating talent, there is a direct correlation between *number of career at bats* and *difference between total-bases and strikeouts*. Hitters who balance the number of bases they get from hits and number of times they strike out (essentially a wasted at-bat in most cases) have longer careers than those who either strike out too much *or* don't hit for enough bases.
+
+***3. Young hitters are prone to sacrifice and strike out, while hitters with more at bats are more prone to hit home runs and draw walks.***
+- Again, when evaluating how players will most likely progress in their careers, it is interesting that the more at bats a player has in their career, the more likely they will be to draw a walk or jump on a mistake by the pitcher for a home run.
+
+### Modeling Recommendations
+1. The more detail in the data, the better the predictions will be. Incorporating the players live statistics, as well as the dynamic features of *'What just happened this inning?'* are very important to add dimensions.
+2. A neural network is very prone to overfitting, so the number of training epochs should be small. It does no good for the network to just "memorize" the training data.
+3. Additionally, adding in class weights hurts performance. It is a similar case of overfitting. 
+  - For example, if the model is rewarded too strongly for predicting a catcher's interference, it will behave very poorly - i.e.: predict that there's an 80% chance that in the upcoming play, the catcher will interfere with the batter. It is clear that this is not ideal behavior of the model.
+  
 We can conclusively say that the batting order makes a difference in expected runs scored. With 100 randomly selected permutations of a lineup, after running simulations totaling 300-innings the differences were dramatic.
 
 <img src='./images/lineup_samples_ev.png'>

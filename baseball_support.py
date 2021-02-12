@@ -1058,7 +1058,7 @@ def plot_stat_impact_on_outcome(
 					   'darkblue']
 
 	# Plot
-	fig, ax = plt.subplots()
+	fig, ax = plt.subplots(figsize=(12,8))
 	for outcome, x_tick in zip(possible_outcomes, x_tick_markers):
 		s = data[data[target] == outcome].copy()
 		# Find leftmost placement of bars.
@@ -1096,11 +1096,15 @@ def plot_stat_impact_on_outcome(
 	ax.set(title=f'{legend_label or stat_column} :: Impact on {target.title()}',
 		   ylabel='Percent of Outcomes' if bottom_align else '',
 		   xlabel='Outcome')
-	ax.legend(loc='upper center', 
-			  bbox_to_anchor=(0.5, -0.15) if bottom_align else (0.5, 0),
-			  fancybox=True, 
-			  shadow=True, 
-			  ncol=5)
+	handles, labels = ax.get_legend_handles_labels() # In order to reverse the legend elements.
+	ax.legend(
+		handles[::-1], 
+		labels[::-1],
+		loc='right', 
+		bbox_to_anchor=(0,0,1.22,1),
+		labelspacing=3,
+		fancybox=True,
+		ncol=1)
 	fig.tight_layout()
 	plt.show()
 	return fig
@@ -1166,6 +1170,8 @@ def load_modeling_tools(path='./modeling/'):
 		y_train_processed (sparse matrix)
 		X_test_processed (sparse matrix)
 		y_test_processed (sparse matrix)
+		X_val_processed (sparse matrix)
+		y_val_processed (sparse matrix)
 	"""
 
 	modeling_tools = {}
@@ -1191,6 +1197,8 @@ def load_modeling_tools(path='./modeling/'):
 		np.ravel(modeling_tools.get('y_train_processed').todense()),
 		modeling_tools.get('X_test_processed'),
 		np.ravel(modeling_tools.get('y_test_processed').todense()),
+		modeling_tools.get('X_val_processed'),
+		np.ravel(modeling_tools.get('y_val_processed').todense())
 	)
 
 def load_preprocessors(path='./modeling/preprocessor/'):
@@ -1205,3 +1213,32 @@ def load_preprocessors(path='./modeling/preprocessor/'):
 	with open(f'{path}y_preprocessor.pkl', 'rb') as infile:
 		y_preprocessor = pickle.load(infile)
 	return X_preprocessor, y_preprocessor
+
+def plot_history(history, style=['ggplot', 'seaborn-talk']):
+	"""
+	Plot history from History object (or history dict) 
+	once Tensorflow model is trained.
+
+	Parameters:
+	-----------
+	history:
+		History object returned from a model.fit()
+	style: string or list of strings (default: ['ggplot', 'seaborn-talk'])
+		Style from matplotlib.
+	"""
+	if not isinstance(history, dict):
+		history = history.history
+
+	metrics_lst = [m for m in history.keys() if not m.startswith('val')]
+	N = len(metrics_lst)
+	with plt.style.context(style):
+		fig, ax_lst = plt.subplots(nrows=N, figsize=(8, 4*(N)))
+		ax_lst = [ax_lst] if N == 1 else ax_lst.flatten() # Flatten ax_lst.
+		for metric, ax in zip(metrics_lst, ax_lst):
+			val_m = f'val_{metric}'
+			ax.plot(history[metric], label=metric)
+			ax.plot(history[val_m], label=val_m)
+			ax.set(title=metric.title(), xlabel='Epoch', ylabel=metric.title())
+			ax.legend()
+		fig.tight_layout()
+		plt.show()
