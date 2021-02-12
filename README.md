@@ -39,7 +39,7 @@ There is some intuition to this - especially that your best hitters should be hi
 
 ______ | ______
 :---: | :---:
-<img src='./images/NN_2010_Yankees_comparison.png' width=300 /> | <img src='./images/NN_2010_Mariners_comparison.png' width=300 />
+<img src='./images/SGD - 2010 Yankees_comparison.png' width=300 /> | <img src='./images/SGD - 2010 Mariners_comparison.png' width=300 />
 
 The app is deployed on *Heroku* and can be found <a href='https://capstone-baseball-simulator.herokuapp.com/'>**here**</a>!
 > *https://capstone-baseball-simulator.herokuapp.com/*
@@ -269,15 +269,17 @@ Actual:    Average Runs per Game: 4.518518518518518
 ```
 > **Neural Network:**
 > ```
-> Simulated: Average Runs per Game: 4.296296296296297
+> Simulated: Average Runs per Game: 4.493827160493828
+> Mean Absolute Error: 0.667
 > ```
-> <img src='./images/NN_2010_Yankees_comparison.png'>
+> <img src='./images/NN - 2010 Yankees_comparison.png'>
 > 
 > **SGD:**
 > ```
-> Simulated: Average Runs per Game: 5.061728395061729
+> Simulated: Average Runs per Game: 4.950617283950617
+> Mean Absolute Error: 0.58
 > ```
-> <img src='./images/SGD_2010_Yankees_comparison.png'>
+> <img src='./images/SGD - 2010 Yankees_comparison.png'>
 
 ***Mariners***
 ```
@@ -285,15 +287,17 @@ Actual:    Average Runs per Game: 3.753086419753086
 ```
 > **Neural Network**:
 > ```
-> Simulated: Average Runs per Game: 3.9135802469135803
+> Simulated: Average Runs per Game: 2.740740740740741
+> Mean Absolute Error: 1.062
 > ```
-> <img src='./images/NN_2010_Mariners_comparison.png'>
+> <img src='./images/NN - 2010 Mariners_comparison.png'>
 > 
 > **SGD**:
 > ```
-> Simulated: Average Runs per Game: 4.691358024691358
+> Simulated: Average Runs per Game: 4.135802469135802
+> Mean Absolute Error: 0.556
 > ```
-> <img src='./images/SGD_2010_Mariners_comparison.png'>
+> <img src='./images/SGD - 2010 Mariners_comparison.png'>
 
 Clearly, the Neural Network returned a much closer prediction to reality (the SGD was ballooning predicted runs-scored).
 
