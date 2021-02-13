@@ -37,9 +37,9 @@ There is some intuition to this - especially that your best hitters should be hi
 
 # Baseball Simulator App
 
-______ | ______
+Highest-Scoring Team | Lowest-Scoring Team
 :---: | :---:
-<img src='./images/SGD - 2010 Yankees_comparison.png' width=300 /> | <img src='./images/SGD - 2010 Mariners_comparison.png' width=300 />
+<img src='./images/SGD - 2010 Yankees_comparison.png' width=500 /> | <img src='./images/SGD - 2010 Mariners_comparison.png' width=500 />
 
 The app is deployed on *Heroku* and can be found <a href='https://capstone-baseball-simulator.herokuapp.com/'>**here**</a>!
 > *https://capstone-baseball-simulator.herokuapp.com/*
@@ -299,7 +299,6 @@ Actual:    Average Runs per Game: 3.753086419753086
 > ```
 > <img src='./images/SGD - 2010 Mariners_comparison.png'>
 
-Clearly, the Neural Network returned a much closer prediction to reality (the SGD was ballooning predicted runs-scored).
 
 # Conclusions
 
@@ -325,8 +324,8 @@ However, those outcomes are *possible* and incorporated into the Simulator app.
 - **Lineups should change regularly** to leverage different advantages against different pitchers.
   - The web app can be used to optimize your lineup of players to return the order with the highest 'expected runs scored'.
 
-***2. The larger the difference between 'total bases' and strikeouts, the longer the hitter's career will be.***
-- When evaluating talent, there is a direct correlation between *number of career at bats* and *difference between total-bases and strikeouts*. Hitters who balance the number of bases they get from hits and number of times they strike out (essentially a wasted at-bat in most cases) have longer careers than those who either strike out too much *or* don't hit for enough bases.
+***2. When evaluating young talent, look for players with a large difference between 'total bases' and strikeouts.***
+- There is a direct correlation between *number of career at bats* and *difference between total-bases and strikeouts*. Hitters who balance the number of bases they get from hits and number of times they strike out (essentially a wasted at-bat in most cases) have longer careers than those who either strike out too much *or* don't hit for enough bases.
 
 ***3. Young hitters are prone to sacrifice and strike out, while hitters with more at bats are more prone to hit home runs and draw walks.***
 - Again, when evaluating how players will most likely progress in their careers, it is interesting that the more at bats a player has in their career, the more likely they will be to draw a walk or jump on a mistake by the pitcher for a home run.
